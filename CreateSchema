@@ -1,4 +1,0 @@
-create user SCHEMA_NAME identified by PASSWORD 
-grant all privileges to SCHEMA_NAME
-
-drop user SCHEMA_NAME
