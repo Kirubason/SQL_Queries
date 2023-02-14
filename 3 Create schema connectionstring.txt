@@ -1,0 +1,56 @@
+Connection String
+
+UserName : sys
+Pass : sys
+ip : localhost
+port: 1521
+service name : xe
+
+-----------------------
+
+create user NOTES_APP identified by notes 
+
+grant all privileges to NOTES_APP
+
+Username : NOTES_APP 
+password: notes123
+ip: localhost
+port: 1521
+service name :xe
+
+
+-------------------------
+
+
+
+
+
+
+create user MEDICAL_DATA identified by medical 
+grant all privileges to MEDICAL_DATA
+
+drop user MEDICAL_DATA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

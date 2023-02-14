@@ -1,0 +1,25 @@
+ORDER BY
+GROUP BY
+HAVING
+WHERE
+
+-------------------------
+
+
+SELECT * from PATIENT order by NAME desc
+
+
+------------------------------------------
+
+SELECT COUNT(GENDER),GENDER from PATIENT group by GENDER
+
+SELECT COUNT(DISEASE),DISEASE from PATIENT group by DISEASE
+
+------------------------------------------
+
+SELECT COUNT(DISEASE),DISEASE from PATIENT group by DISEASE 
+having COUNT(DISEASE) = 1
+
+------------------------------------------
+
+SELECT * FROM PATIENT where  disease='CORONA'

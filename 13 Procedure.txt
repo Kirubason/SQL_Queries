@@ -1,0 +1,60 @@
+What is procedure
+
+executing set of statements.
+
+
+Name
+Input parameter
+Begin
+	body
+	exception
+End
+
+--------------------------------
+
+select * from patient;
+select * from safe_patient;
+select * from critical_patient;
+
+insert data from one table to multiple table
+
+-------------------------------------------
+
+CREATE OR REPLACE Procedure SPLIT_PATIENT
+AS
+BEGIN
+    -- insert less critical patient
+    DELETE from SAFE_PATIENT;
+    INSERT INTO SAFE_PATIENT vales(select * from PATIENT where disease not in 'CORONA');
+    -- insert high critical patient
+    DELETE from CRITICAL_PATIENT;
+    INSERT INTO CRITICAL_PATIENT vales(select * from PATIENT where disease='CORONA');
+END;
+
+EXEC SPLIT_PATIENT;
+
+-----------------------------------------
+
+CREATE OR REPLACE Procedure INSERT_PATIENT
+(
+    v_enrollment number,
+    v_name VARCHAR2,
+    v_age NUMBER,
+    v_gender varchar2,
+    v_dateofbirth date,
+    v_address varchar2,
+    v_mobile number,
+    v_disease varchar2
+)
+AS
+BEGIN
+    INSERT INTO PATIENT(PATIENT_ENROLLMENT_NO,NAME,AGE,GENDER,DOB,ADDRESS,MOBILE,DISEASE) 
+    VALUES(v_enrollment,v_name,v_age,v_gender,v_dateofbirth,v_address,v_mobile,v_disease);
+END;
+
+
+exec INSERT_PATIENT(1121,'JONAH',24,'MALE',SYSDATE-8760,'TIRUNELVELI TAMIL NADU',9360586730,'NOSE PROBLEM');
+
+exec INSERT_PATIENT(1122,'JOB',24,'MALE',SYSDATE-8760,'TIRUNELVELI TAMIL NADU',9360586730,'EAR PAIN');
+
+-----------------------------------------------

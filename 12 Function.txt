@@ -1,0 +1,64 @@
+1. Single row function
+
+	a) Character function
+
+
+		SELECT CONCAT('Micah', 'Tech') from dual;
+
+		SELECT LOWER('MICAH') from dual;
+
+		SELECT UPPER('micha') from dual;
+
+		SELECT LENGTH('CANDID##$E') FROM DUAL;
+
+	-------------------------------------
+
+	b) Numeric function
+
+		SELECT POWER(233,22) from dual;
+
+		SELECT SIGN(0) from dual;
+		
+		SELECT ROUND(1523.193232323,3) "Round" FROM DUAL;
+
+	----------------------------------------
+	
+	c) Datetime function
+
+		SELECT TO_CHAR(SYSDATE, 'MM-DD-YYYY HH24:MI:SS') FROM DUAL;
+		
+		SELECT NEXT_DAY('05-Feb-2023','SUNDAY') FROM DUAL;
+
+---------------------------------------------------
+
+2. Aggregate function
+
+	Aggregate functions return a single result row based on groups of rows, rather than on single rows.
+
+		select MAX(AGE) from patient;
+		select MIN(AGE) from patient;
+		select AVG(AGE) from patient;
+		select SUM(AGE) from patient;
+
+
+----------------------------------------
+
+3. User defined function
+
+
+
+	CREATE or REPLACE FUNCTION DISEASE_COUNT
+	(
+		v_disease in varchar2
+	)  
+	RETURN number 
+	AS  
+   	v_total number;  
+	BEGIN  
+
+   		SELECT count(*) into v_total FROM PATIENT where DISEASE = v_disease;  
+    		RETURN v_total;  
+	END;  
+
+
+select DISEASE_COUNT('CORONA') from dual;

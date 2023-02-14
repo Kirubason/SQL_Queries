@@ -1,0 +1,73 @@
+Cursor
+
+---------------
+
+Oracle creates Memory Area (Context Area) for processing SQL Statements
+Cursor is pointer for this context area
+
+Types: 
+	1. Implicit cursors
+		%FOUND
+		%NOTFOUND
+		%ROWCOUNT
+	2. Explicit cursors
+
+
+-------------------------
+
+Implicit cursor
+	Programmers defined cursor to gain more control over context area
+
+
+Create or replace procedure IMPLICIT_CURSOR_TEST
+as  
+   v_patient number; 
+BEGIN 
+   UPDATE patient 
+   SET Age = Age + 1 where Age='22323'; 
+   IF sql%notfound THEN 
+      dbms_output.put_line('No patient detected'); 
+   ELSIF sql%found THEN 
+      v_patient := sql%rowcount;
+      dbms_output.put_line( v_patient || ' Patient Age Updated '); 
+   END IF;  
+END; 
+/
+
+set serveroutput on;
+exec IMPLICIT_CURSOR_TEST;
+
+
+----------------------------
+
+Explicit cursor
+	1. Create Cursor
+	2. Open Cursor
+	3. Fetch cursor
+	4. Close Cursor
+select * from cursor_table
+
+Create or replace procedure EXPLICIT_CURSOR_TEST
+As 
+   v_enroll number; 
+   v_name varchar2(100); 
+   v_age number;
+   v_gender varchar2(6);
+   v_dob date;
+   CURSOR cursor_patient is 
+      SELECT PATIENT_ENROLLMENT_NO, NAME, AGE, GENDER, DOB FROM PATIENT; 
+BEGIN 
+   OPEN cursor_patient; 
+   LOOP 
+   FETCH cursor_patient into v_enroll, v_name, v_age, v_gender , v_dob; 
+      EXIT 
+            WHEN cursor_patient%notfound; 
+            INSERT INTO CURSOR_TABLE(PATIENT_ENROLLMENT_NO, NAME, AGE, GENDER, DOB) 
+            values(v_enroll, v_name, v_age, v_gender , v_dob);
+   END LOOP; 
+   CLOSE cursor_patient; 
+END; 
+/
+
+
+exec EXPLICIT_CURSOR_TEST;

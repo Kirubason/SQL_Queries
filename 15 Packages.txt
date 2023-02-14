@@ -1,0 +1,82 @@
+Easy to manage
+improve performance
+group the precedure and function into the single unit
+
+
+SELECT * from patient;
+Select * from safe_patient;
+select * from critical_patient;
+
+---------------------------------------- 
+
+
+create or replace package patient_package
+as
+procedure ADMIT_PATIENT(v_enrollment in number,v_name in VARCHAR2,v_age 
+                        in number,v_gender in VARCHAR2,v_dateofbirth in date,
+                        v_address in VARCHAR2,v_mobile in number,v_disease in VARCHAR2);
+procedure DISCHARGE_PATIENT;
+
+function DISEASE_COUNT(v_disease in varchar2) RETURN number;
+
+end;
+
+
+
+---------------------------------------
+
+
+create or replace package body patient_package
+as
+
+-------Procedure (When patient get admitted into hospital)
+procedure ADMIT_PATIENT(v_enrollment in number,v_name in VARCHAR2,v_age 
+                        in number,v_gender in VARCHAR2,v_dateofbirth in date,
+                        v_address in VARCHAR2,v_mobile in number,v_disease in VARCHAR2)
+is
+begin
+    INSERT INTO PATIENT(PATIENT_ENROLLMENT_NO,NAME,AGE,GENDER,DOB,ADDRESS,MOBILE,DISEASE) 
+    VALUES(v_enrollment,v_name,v_age,v_gender,v_dateofbirth,v_address,v_mobile,v_disease);
+    commit;
+end ADMIT_PATIENT;
+
+-------Procedure (When patient dischage from hospital)
+procedure DISCHARGE_PATIENT
+is
+BEGIN
+    -- insert less critical patient
+    DELETE from SAFE_PATIENT;
+    INSERT INTO SAFE_PATIENT vales(select * from PATIENT where disease not in 'CORONA');
+    -- insert high critical patient
+    DELETE from CRITICAL_PATIENT;
+    INSERT INTO CRITICAL_PATIENT vales(select * from PATIENT where disease='CORONA');
+    commit;
+END DISCHARGE_PATIENT;
+
+
+--Function for getting afftected counts.
+
+function DISEASE_COUNT(v_disease in varchar2)
+RETURN number 
+IS  
+v_total number;  
+BEGIN  
+     SELECT count(*) into v_total FROM PATIENT where DISEASE = v_disease;  
+     RETURN v_total;  
+END DISEASE_COUNT;
+
+end;
+
+
+-----------------------------------
+
+exec patient_package.ADMIT_PATIENT(1126,'MOSES',34,'MALE',SYSDATE-12760,'SALEM TAMIL NADU',9360586730,'CORONA');
+exec patient_package.ADMIT_PATIENT(1127,'ISAAC',30,'MALE',SYSDATE-11760,'ERODE TAMIL NADU',9360586730,'CORONA');
+exec patient_package.ADMIT_PATIENT(1128,'JACOB',31,'MALE',SYSDATE-10760,'TRICHY TAMIL NADU',9360586730,'COLD');
+exec patient_package.ADMIT_PATIENT(1129,'JOSEPH',32,'MALE',SYSDATE-12760,'COIMBATORE TAMIL NADU',9360586730,'CORONA');
+
+exec patient_package.DISCHARGE_PATIENT();
+
+
+select patient_package.disease_count('CORONA') from dual
+

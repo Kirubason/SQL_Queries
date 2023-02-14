@@ -1,0 +1,15 @@
+Index
+
+select * from patient
+------------------------------
+
+CREATE UNIQUE INDEX Index_Age ON PATIENT (AGE);
+
+DROP INDEX Index_Age
+
+
+------------------------------
+
+CREATE UNIQUE INDEX Index_Name ON PATIENT (NAME);
+
+DROP INDEX Index_Name 

@@ -1,0 +1,61 @@
+Joins
+
+It is used to combine rows from two or more tables
+
+Types
+	1. Inner join
+	2. Outer join
+		Left outer join
+		Right outer join
+		Full join
+	3. Cross join
+
+---------------------
+
+Inner join
+
+SELECT DOCTOR_NAME, NAME , AGE, DOCTOR_SPECIALISATION, DISEASE 
+FROM patient   
+INNER JOIN doctors  
+ON patient.PATIENT_ENROLLMENT_NO = doctors.PATIENT_ENROLLMENT_NO;
+
+-------------------
+
+Left outer join
+
+SELECT DOCTOR_NAME, NAME , AGE, DOCTOR_SPECIALISATION, DISEASE ,
+patient.PATIENT_ENROLLMENT_NO, doctors.PATIENT_ENROLLMENT_NO
+FROM doctors     
+LEFT OUTER JOIN patient    
+ON patient.PATIENT_ENROLLMENT_NO = doctors.PATIENT_ENROLLMENT_NO;
+
+----------------------
+
+right outer join
+
+SELECT DOCTOR_NAME, NAME , AGE, DOCTOR_SPECIALISATION, DISEASE  ,
+patient.PATIENT_ENROLLMENT_NO , doctors.PATIENT_ENROLLMENT_NO
+FROM doctors     
+right OUTER JOIN patient    
+ON patient.PATIENT_ENROLLMENT_NO = doctors.PATIENT_ENROLLMENT_NO;
+
+
+-----------------------
+
+Full outer join
+
+SELECT DOCTOR_NAME, NAME , AGE, DOCTOR_SPECIALISATION, DISEASE  ,
+patient.PATIENT_ENROLLMENT_NO , doctors.PATIENT_ENROLLMENT_NO
+FROM doctors     
+full OUTER JOIN patient    
+ON patient.PATIENT_ENROLLMENT_NO = doctors.PATIENT_ENROLLMENT_NO;
+
+-----------------------
+
+Cross join
+
+SELECT DOCTOR_NAME, NAME , AGE, DOCTOR_SPECIALISATION, DISEASE  ,
+patient.PATIENT_ENROLLMENT_NO , doctors.PATIENT_ENROLLMENT_NO
+FROM doctors     
+cross JOIN patient    
+
